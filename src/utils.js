@@ -7,7 +7,7 @@ export function makeRandomData() {
   const l = randomInt(20, 25);
 
   for (var i = 0; i < l; i++) {
-    d[i] = { id: i, r: randomInt(1, 10), x: randomInt(-500, 500), y: randomInt(-500, 500) };
+    d[i] = { id: i, r: randomInt(25, 75) };
   }
 
   return d;
