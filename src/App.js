@@ -27,7 +27,6 @@ class App extends Component {
   };
 
   handleResize = (width, height) => {
-    console.log(width);
     this.setState({
       ...this.state,
       visualization: {
