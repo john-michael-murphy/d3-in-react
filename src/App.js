@@ -1,32 +1,36 @@
 /** @jsx jsx */
 import { Component } from "react";
-import StreamGraphCanvas from "./components/StreamGraphCanvas";
-import { jsx, css } from "@emotion/core";
-
-const appStyle = css`
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background-color: #ddd;
-`;
+import VisualizationCanvas from "./components/VisualizationCanvas";
+import { jsx } from "@emotion/core";
+import { makeRandomData } from "./utils";
+import { appStyle, buttonStyle } from "./styled";
 
 class App extends Component {
   state = {
-    streamGraph: {
-      data: [],
+    visualization: {
+      data: makeRandomData(),
       lastRedrawRequest: null,
       width: null,
       height: null
     }
   };
 
-  requestRedraw = (width, height) => {
+  handleDataUpdate = () => {
     this.setState({
       ...this.state,
-      streamGraph: {
-        ...this.state.streamGraph,
+      visualization: {
+        ...this.state.visualization,
+        data: makeRandomData(),
+        lastRedrawRequest: Date.now()
+      }
+    });
+  };
+
+  handleResize = (width, height) => {
+    this.setState({
+      ...this.state,
+      visualization: {
+        ...this.state.visualization,
         lastRedrawRequest: Date.now(),
         width,
         height
@@ -35,20 +39,23 @@ class App extends Component {
   };
 
   render() {
-    const { requestRedraw } = this;
+    const { handleDataUpdate, handleResize } = this;
     const {
-      streamGraph: { data, lastRedrawRequest, width, height }
+      visualization: { data, lastRedrawRequest, width, height }
     } = this.state;
 
     return (
       <div css={[appStyle]}>
-        <StreamGraphCanvas
-          requestRedraw={requestRedraw}
+        <VisualizationCanvas
           data={data}
+          handleResize={handleResize}
           lastRedrawRequest={lastRedrawRequest}
           width={width}
           height={height}
         />
+        <button css={[buttonStyle]} onClick={handleDataUpdate}>
+          Redraw
+        </button>
       </div>
     );
   }

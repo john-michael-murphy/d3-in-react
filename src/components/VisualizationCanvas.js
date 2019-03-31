@@ -2,7 +2,7 @@
 import { Component, createRef } from "react";
 import debounce from "lodash.debounce";
 import { jsx, css } from "@emotion/core";
-import drawStreamGraph from "../d3/drawStreamGraph";
+import drawVisualization from "../d3/drawVisualization";
 
 const containerStyle = css`
   position: absolute;
@@ -12,13 +12,13 @@ const containerStyle = css`
   height: 100%;
 `;
 
-class StreamGraphCanvas extends Component {
+class VisualizationCanvas extends Component {
   containerRef = createRef();
   svgRef = createRef();
 
   resize = debounce(() => {
     const { width, height } = this.containerRef.current.getBoundingClientRect();
-    this.props.requestRedraw(width, height);
+    this.props.handleResize(width, height);
   }, 250);
 
   componentDidMount() {
@@ -38,7 +38,7 @@ class StreamGraphCanvas extends Component {
     const { width, height, data, handlers } = this.props;
     const target = this.svgRef.current;
 
-    drawStreamGraph({ target, width, height, data, handlers });
+    drawVisualization({ target, width, height, data, handlers });
   }
 
   render() {
@@ -53,4 +53,4 @@ class StreamGraphCanvas extends Component {
   }
 }
 
-export default StreamGraphCanvas;
+export default VisualizationCanvas;
