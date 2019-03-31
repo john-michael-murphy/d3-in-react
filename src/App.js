@@ -1,25 +1,54 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/** @jsx jsx */
+import { Component } from "react";
+import StreamGraphCanvas from "./components/StreamGraphCanvas";
+import { jsx, css } from "@emotion/core";
+
+const appStyle = css`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #ddd;
+`;
 
 class App extends Component {
+  state = {
+    streamGraph: {
+      data: [],
+      lastRedrawRequest: null,
+      width: null,
+      height: null
+    }
+  };
+
+  requestRedraw = (width, height) => {
+    this.setState({
+      ...this.state,
+      streamGraph: {
+        ...this.state.streamGraph,
+        lastRedrawRequest: Date.now(),
+        width,
+        height
+      }
+    });
+  };
+
   render() {
+    const { requestRedraw } = this;
+    const {
+      streamGraph: { data, lastRedrawRequest, width, height }
+    } = this.state;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div css={[appStyle]}>
+        <StreamGraphCanvas
+          requestRedraw={requestRedraw}
+          data={data}
+          lastRedrawRequest={lastRedrawRequest}
+          width={width}
+          height={height}
+        />
       </div>
     );
   }
