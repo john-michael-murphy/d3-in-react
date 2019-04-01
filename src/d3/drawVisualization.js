@@ -8,8 +8,7 @@ export default function drawStreamGraph({ target, height, width, data, handlers 
   const center = d3.forceCenter(width / 2, height / 2);
   const forceCollide = d3.forceCollide().radius(d => d.r);
 
-  const simulation = d3
-    .forceSimulation(data)
+  d3.forceSimulation(data)
     .force("charge", forceManyBody)
     .force("center", center)
     .force("collision", forceCollide)
@@ -33,7 +32,7 @@ export default function drawStreamGraph({ target, height, width, data, handlers 
     nodes.attr("transform", positionNode);
   }
 
-  function positionNode(d, ...rest) {
+  function positionNode(d) {
     return `translate(${d.x}, ${d.y})`;
   }
 
