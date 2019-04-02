@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-export default function drawStreamGraph({ target, height, width, data, handlers }) {
+export default function drawVisualization({ target, height, width, data, handlers }) {
   const svg = d3.select(target);
   let nodes = svg.selectAll("circle").data(data, d => d.id);
 

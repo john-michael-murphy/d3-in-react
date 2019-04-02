@@ -2,40 +2,25 @@
 import { Component } from "react";
 import VisualizationCanvas from "./components/VisualizationCanvas";
 import { jsx } from "@emotion/core";
-import { makeRandomData } from "./utils";
+// import { makeRandomData } from "./utils";
 import { appStyle, buttonStyle } from "./styled";
 
 class App extends Component {
   state = {
-    visualization: {
-      data: makeRandomData(),
-      lastRedrawRequest: null,
-      width: null,
-      height: null
-    }
+    // visualization: {
+    //   data: null,
+    //   lastRedrawRequest: null,
+    //   width: null,
+    //   height: null
+    // }
   };
 
   handleDataUpdate = () => {
-    this.setState({
-      ...this.state,
-      visualization: {
-        ...this.state.visualization,
-        data: makeRandomData(),
-        lastRedrawRequest: Date.now()
-      }
-    });
+    //
   };
 
   handleResize = (width, height) => {
-    this.setState({
-      ...this.state,
-      visualization: {
-        ...this.state.visualization,
-        lastRedrawRequest: Date.now(),
-        width,
-        height
-      }
-    });
+  //
   };
 
   render() {
@@ -53,7 +38,7 @@ class App extends Component {
           width={width}
           height={height}
         />
-        <button css={[buttonStyle]} onClick={handleDataUpdate}>
+        <button css={[buttonStyle]} /* onClick={}*/>
           Redraw
         </button>
       </div>
