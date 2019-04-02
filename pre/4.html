@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
+  <style>
+    svg {
+      background-color: pink;
+    }
+  </style>
+
+  <title>Part One</title>
+  <script>
+    const data = [{
+        id: 0,
+        r: 10,
+        cx: 50,
+        cy: 50
+      },
+      {
+        id: 1,
+        r: 20,
+        cx: 150,
+        cy: 150
+      },
+      {
+        id: 2,
+        r: 30,
+        cx: 250,
+        cy: 250
+      },
+    ]
+
+    const data2 = data.concat([{
+      id: 3,
+      r: 40,
+      cx: 350,
+      cy: 350
+    }])
+  </script>
+</head>
+
+<body>
+  <div>
+    <button onClick="draw(data, 500, 500)">Data 1</button>
+    <button onClick="draw(data2, 500, 500)">Data 2</button>
+  </div>
+  <svg width="500px" height="500px" />
+
+  <script>
+    function draw(data, width, height) {
+
+      const svg = d3.select("svg").attr('width', width).attr("height", height)
+
+      let circle = svg.selectAll("circle").data(data, d => d.id)
+
+      circle.exit().transition().duration(1000).attr("r", 0).remove()
+
+      circle = circle.enter().append("circle").merge(circle)
+
+      circle.transition().duration(500).attr("r", d => d.r).attr("fill", "white")
+
+      // const forceManyBody = d3.forceManyBody().strength(100);
+      // const center = d3.forceCenter(width / 2, height / 2);
+      // const forceCollide = d3.forceCollide().radius(d => d.r);
+      //
+      // d3.forceSimulation(data)
+      //   .force("charge", forceManyBody)
+      //   .force("center", center)
+      //   .force("collision", forceCollide)
+      //   .on("tick", ticked);
+      //
+      // function ticked() {
+      //   circle.attr("transform", positionNode);
+      // }
+      //
+      // function positionNode(d) {
+      //   return `translate(${d.x}, ${d.y})`;
+      // }
+
+    }
+  </script>
+
+</body>
+
+</html>
